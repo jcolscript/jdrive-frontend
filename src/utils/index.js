@@ -6,7 +6,8 @@ const utils = {
     },
 
     storageGetItem (name) {
-        localStorage.getItem(name)
+        const result = localStorage.getItem(name)
+        return result;
     },
 
     storageRemoveItem (nome) {
