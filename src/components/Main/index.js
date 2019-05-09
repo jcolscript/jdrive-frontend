@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Nav from '../Nav';
 
 import utils from '../../utils';
 import api from '../../services/api';
@@ -25,7 +26,7 @@ export default class Main extends Component {
       }
     });
 
-    console.log(response);
+    this.props.history.push(`/jdrive/folder/${response.data._id}`)
   }
 
   handleInputChange = (e) => {
@@ -35,7 +36,9 @@ export default class Main extends Component {
   }
 
   render() {
-    return (
+    return [
+      <div className="App">
+        <Nav />
         <div id="main-container">
             <form onSubmit={this.handleSubmit} action="">
                 <img className="logo" width="250px" src= {logo} alt="" />
@@ -47,6 +50,7 @@ export default class Main extends Component {
                 <button type="submit">Criar</button>
             </form>
         </div>
-    );
+      </div>
+    ];
   }
 }

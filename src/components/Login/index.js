@@ -32,7 +32,7 @@ export default class Login extends Component {
 
                 if(res.status === 200){
                     utils.storageSetItem('@JDriveToken', res.data.jdrive_token)
-                    this.props.history.push('jdrive');
+                    this.props.history.push('/jdrive');
                 }
             })
             .catch(error => {

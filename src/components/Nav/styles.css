@@ -1,0 +1,33 @@
+#nav-container {
+    width: 100vw;
+    z-index: 7;
+    box-sizing: border-box;
+}
+
+#nav-container nav {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: blue;
+    transform: translateZ(0px);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+
+#nav-container nav .jd-a1 {
+    min-height: 70px;
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    position: relative;
+    max-width: 1600px!important;
+    flex-wrap: wrap;
+}
+
+.userInfo {
+    align-items: center;
+    min-width: 100px;
+}
+
+
