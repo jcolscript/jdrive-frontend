@@ -4,7 +4,7 @@ import Nav from '../Nav';
 import utils from '../../utils';
 import api from '../../services/api';
 
-import logo from '../../assets/logo.svg';
+import logo from '../../assets/img1.png';
 import './styles.css';
 
 export default class Main extends Component {
@@ -41,7 +41,7 @@ export default class Main extends Component {
         <Nav />
         <div id="main-container">
             <form onSubmit={this.handleSubmit} action="">
-                <img className="logo" width="250px" src= {logo} alt="" />
+                <img className="img" src= {logo} alt="" />
                 <input 
                   placeholder="Criar uma pasta"
                   value = {this.state.newFolder}

@@ -2,16 +2,16 @@ import decode from 'jwt-decode';
 
 const utils = {
     storageSetItem (name, value) {
-        localStorage.setItem(name, value);
+        sessionStorage.setItem(name, value);
     },
 
     storageGetItem (name) {
-        const result = localStorage.getItem(name)
+        const result = sessionStorage.getItem(name)
         return result;
     },
 
     storageRemoveItem (nome) {
-        localStorage.removeItem(nome);
+        sessionStorage.removeItem(nome);
     },
 
     async jwtDecode (token){
