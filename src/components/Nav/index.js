@@ -32,7 +32,7 @@ export default class Nav extends Component {
             <div className="nav nav_primary">
               <div className="container nav__container">
                 <div className="brand .brand__logo">
-                  <img width="150px" src= {logo} alt="" />
+                  <a href="/jdrive"><img width="150px" src= {logo} alt="" /></a>
                 </div>
                 <div className="userInfo">
                     <img className="avatar" src={this.state.avatar} alt="avatar"/>

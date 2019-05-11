@@ -1,5 +1,8 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { Component } from 'react';
+import  { distanceInWords } from 'date-fns'
+import  pt from 'date-fns/locale/pt'
+import Dropzone from 'react-dropzone'
 import Nav from '../Nav';
 import utils from '../../utils';
 import api from '../../services/api';
@@ -23,6 +26,16 @@ export default class Folder extends Component {
 
     this.setState({folder: response.data});
   }
+
+  handleUpload = (files) => {
+    const folder = this.props.match.params.id;
+    files.forEach(file => {
+      const data = new FormData();
+      data.append('file', file);
+      api.post(`folders/${folder}/files`, FormData);
+    });
+  };
+
   render() {
     return [
       <div className="App">
@@ -31,14 +44,22 @@ export default class Folder extends Component {
           <header>
           < MdFolderOpen size={40} color='#cd3a17' /><h1>{this.state.folder.title}</h1>
           </header>
+          <Dropzone onDropAccepted={this.handleUpload}>
+            {({getRootProps, getInputProps }) => (
+              <div className="upload" {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Araste arquivos ou clique aqui</p>
+              </div>
+            )}
+          </Dropzone>
           <ul>
             {this.state.folder.files && this.state.folder.files.map( file => (
-              <li>
+              <li key={file.id}>
                 <a className="fileInfo" href={file.url} target="_blank">
                   < MdInsertDriveFile size={50} color='#8f8f8f' />
                   <strong>{file.title}</strong>
                 </a>
-                <span>{file.createdAt}</span>
+                <span>há {distanceInWords(file.createdAt, new Date(), {locale: pt})}</span>
               </li>
             ))}
           </ul>
