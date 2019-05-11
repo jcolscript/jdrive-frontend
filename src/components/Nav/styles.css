@@ -75,11 +75,11 @@
 .drop-content{
     display: none;
     position: absolute;
-    top: 100%;
+    top: 88%;
     z-index: 1000;
     float: left;
-    min-width: 160px;
-    margin: 0px 0 0;
+    min-width: 154px;
+    margin: -10px 0 0;
     font-size: 17px;
     text-align: left;
     list-style: none;
@@ -87,8 +87,7 @@
     background-clip: padding-box;
     border: 1px solid #ccc;
     border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
 }
 
 .drop-content a{
@@ -108,4 +107,11 @@
 
   .userInfo:hover .drop-content{
     display: block;
+}
+
+.drop-content a:hover{
+    color: #262626;
+    text-decoration: none;
+    background-color: #ffffff;
+    cursor: pointer;
 }

@@ -23,7 +23,6 @@ export default class Nav extends Component {
       email: userData.email,
       avatar: userData.avatar,
     })
-    console.log(userData);
   }
 
   render() {
@@ -39,9 +38,8 @@ export default class Nav extends Component {
                     <img className="avatar" src={this.state.avatar} alt="avatar"/>
                     <span className="drop">{this.state.name} {this.state.lastName}</span>
                     <div className="drop-content">
-                      <a>Link1</a>
-                      <a>Link2</a>
-                      <a>Link3</a>
+                      <a>Account</a>
+                      <a>Sair</a>
                     </div>
                 </div>
               </div>
