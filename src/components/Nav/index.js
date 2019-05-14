@@ -25,6 +25,11 @@ export default class Nav extends Component {
     })
   }
 
+  logout = async e => {
+    await utils.storageRemoveItem('@JDriveToken');
+    window.location.href = "/";
+  }
+
   render() {
     return [
       <div id="nav-container">
@@ -39,7 +44,7 @@ export default class Nav extends Component {
                     <span className="drop">{this.state.name} {this.state.lastName}</span>
                     <div className="drop-content">
                       <a>Account</a>
-                      <a>Sair</a>
+                      <a onClick = {this.logout}>Sair</a>
                     </div>
                 </div>
               </div>

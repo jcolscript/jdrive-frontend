@@ -9,7 +9,6 @@ import api from '../../services/api';
 
 import {MdInsertDriveFile, MdFolderOpen} from 'react-icons/md'
 
-import logo from '../../assets/logo.svg'
 import './styles.css';
 
 export default class Folder extends Component {

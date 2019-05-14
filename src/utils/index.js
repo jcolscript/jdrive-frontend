@@ -14,8 +14,8 @@ const utils = {
         sessionStorage.removeItem(nome);
     },
 
-    async jwtDecode (token){
-        const result = await decode(token);
+    jwtDecode (token){
+        const result = decode(token);
         return result;
     }
 }
