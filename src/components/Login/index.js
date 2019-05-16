@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import swal from 'sweetalert';
+import { StageSpinner   } from "react-spinners-kit";
 
 import api from '../../services/api';
 import utils from '../../utils';
@@ -10,12 +11,14 @@ import './styles.css';
 export default class Login extends Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        loading: false
     };
 
     handleSubmit = async (e) => {
         e.preventDefault();
         const {email, password} = this.state;
+        this.setState({loading: true})
         let dataToSend = {
             email: email,
             password: password
@@ -31,13 +34,16 @@ export default class Login extends Component {
             .then(res => {
 
                 if(res.status === 200){
+                    this.setState({loading: false})
                     utils.storageSetItem('@JDriveToken', res.data.jdrive_token)
                     this.props.history.push('/jdrive');
                 }
             })
             .catch(error => {
+                console.log(error);
                 const resData = error.response.data;
                 if(!resData.success){
+                    this.setState({loading: false})
                     swal({
                         text: "Usuário ou senha invalidos",
                         icon: "warning",
@@ -84,7 +90,14 @@ export default class Login extends Component {
                     type="password"
                     required
                 />
-                <button type="submit">Entrar</button>
+                {this.state.loading && 
+                    <StageSpinner  
+                        size={60}
+                        color="#D14827"
+                        loading={this.state.loading}
+                    />
+                }
+                {!this.state.loading && <button type="submit">Entrar</button>}
             </form>
         </div>
     );

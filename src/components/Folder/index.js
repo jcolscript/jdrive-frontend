@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { Component } from 'react';
 import  { distanceInWords } from 'date-fns'
+import { StageSpinner   } from "react-spinners-kit";
 import  pt from 'date-fns/locale/pt'
 import Dropzone from 'react-dropzone'
 import Nav from '../Nav';
@@ -9,12 +10,16 @@ import api from '../../services/api';
 
 import {MdInsertDriveFile, MdFolderOpen} from 'react-icons/md'
 
-import logo from '../../assets/logo.svg'
 import './styles.css';
 
 export default class Folder extends Component {
-  state = { folder: {}};
+  state = { 
+    folder: {},
+    loading: false
+  };
+
   async componentDidMount() {
+    this.setState({loading: true})
     const token = utils.storageGetItem('@JDriveToken');
     const folder = this.props.match.params.id;
     const response = await api.get(`folders/${folder}`,
@@ -24,6 +29,7 @@ export default class Folder extends Component {
       }
     });
 
+    this.setState({loading: false})
     this.setState({folder: response.data});
   }
 
@@ -58,6 +64,13 @@ export default class Folder extends Component {
               </div>
             )}
           </Dropzone>
+          {this.state.loading && 
+            <StageSpinner  
+              size={60}
+              color="#D14827"
+              loading={this.state.loading}
+            />
+          }
           <ul>
             {this.state.folder.files && this.state.folder.files.map( file => (
               <li key={file._id}>
