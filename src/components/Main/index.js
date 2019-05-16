@@ -81,7 +81,7 @@ export default class Main extends Component {
             {this.state.folders && this.state.folders.map( folder => (
               <li key={folder._id}>
                 <a className="folderInfo" href onClick={() => { this.props.history.push(`/jdrive/folder/${folder._id}`) }}>
-                  < MdFolder size={50} color='#8f8f8f' />
+                  < MdFolder size={50} color='#CD3A17' />
                   <strong>{folder.title}</strong>
                 </a>
                 <span>há {distanceInWords(folder.createdAt, new Date(), {locale: pt})}</span>
