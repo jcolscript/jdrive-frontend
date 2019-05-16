@@ -4,6 +4,7 @@ import utils from '../../utils';
 
 import logo from '../../assets/logo.svg';
 import './styles.css';
+import { Link } from 'react-router-dom'
 
 export default class Nav extends Component {
   state = {
@@ -27,7 +28,6 @@ export default class Nav extends Component {
 
   logout = async e => {
     await utils.storageRemoveItem('@JDriveToken');
-    window.location.href = "/";
   }
 
   render() {
@@ -37,14 +37,14 @@ export default class Nav extends Component {
             <div className="nav nav_primary">
               <div className="container nav__container">
                 <div className="brand .brand__logo">
-                  <a href="/jdrive"><img width="150px" src= {logo} alt="" /></a>
+                <Link to="/jdrive"><img width="150px" src= {logo} alt="" /></Link>
                 </div>
                 <div className="userInfo">
                     <img className="avatar" src={this.state.avatar} alt="avatar"/>
                     <span className="drop">{this.state.name} {this.state.lastName}</span>
                     <div className="drop-content">
                       <a>Account</a>
-                      <a onClick = {this.logout}>Sair</a>
+                      <Link onClick={this.logout} to="/">Sair</Link>
                     </div>
                 </div>
               </div>
