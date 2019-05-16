@@ -67,7 +67,7 @@ export default class Login extends Component {
 
   render() {
     return (
-        <div id="main-container">
+        <div id="login-container">
             <form onSubmit={this.handleSubmit}>
                 <img className="logo" width="250px" src={logo} alt="JDrive"/>
                 <input
