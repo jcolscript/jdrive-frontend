@@ -4,6 +4,7 @@ import Nav from '../Nav';
 import { MdFolder } from 'react-icons/md'
 import  { distanceInWords } from 'date-fns'
 import  pt from 'date-fns/locale/pt'
+import { StageSpinner   } from "react-spinners-kit";
 
 import utils from '../../utils';
 import api from '../../services/api';
@@ -14,10 +15,12 @@ import './styles.css';
 export default class Main extends Component {
   state = {
     newFolder: '',
-    folders: ''
+    folders: '',
+    loading: false
   };
 
   async componentDidMount() {
+    this.setState({loading: true})
     const token = utils.storageGetItem('@JDriveToken');
     const response = await api.get(`folders`,
     { 
@@ -25,14 +28,13 @@ export default class Main extends Component {
         "x-access-token": token
       }
     });
-
+    this.setState({loading: false})
     this.setState({folders: response.data});
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
     const token = utils.storageGetItem('@JDriveToken');
-    console.log(token);
     const response = await api.post('/folders', 
     {
       title: this.state.newFolder,
@@ -68,6 +70,13 @@ export default class Main extends Component {
             </form>
         </div>
         <div id="folders-container">
+          {this.state.loading && 
+            <StageSpinner  
+                size={60}
+                color="#D14827"
+                loading={this.state.loading}
+            />
+          }
           <ul>
             {this.state.folders && this.state.folders.map( folder => (
               <li key={folder._id}>
