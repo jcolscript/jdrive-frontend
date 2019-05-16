@@ -28,10 +28,16 @@ export default class Folder extends Component {
 
   handleUpload = (files) => {
     const folder = this.props.match.params.id;
+    const token = utils.storageGetItem('@JDriveToken');
     files.forEach(file => {
       const data = new FormData();
       data.append('file', file);
-      api.post(`folders/${folder}/files`, FormData);
+      api.post(`folders/${folder}/files`, data,
+      { 
+        headers: {
+          "x-access-token": token
+        }
+      });
     });
   };
 
@@ -53,7 +59,7 @@ export default class Folder extends Component {
           </Dropzone>
           <ul>
             {this.state.folder.files && this.state.folder.files.map( file => (
-              <li key={file.id}>
+              <li key={file._id}>
                 <a className="fileInfo" href={file.url} target="_blank">
                   < MdInsertDriveFile size={50} color='#8f8f8f' />
                   <strong>{file.title}</strong>
