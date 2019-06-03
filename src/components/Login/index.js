@@ -32,7 +32,6 @@ export default class Login extends Component {
                 'Content-Type': 'application/json',
             }})
             .then(res => {
-
                 if(res.status === 200){
                     this.setState({loading: false})
                     utils.storageSetItem('@JDriveToken', res.data.jdrive_token)
@@ -42,7 +41,7 @@ export default class Login extends Component {
             .catch(error => {
                 console.log(error);
                 const resData = error.response.data;
-                if(!resData.success){
+                if(!resData.success || error){
                     this.setState({loading: false})
                     swal({
                         text: "Usuário ou senha invalidos",
