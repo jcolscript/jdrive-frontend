@@ -40,22 +40,29 @@ export default class Login extends Component {
             })
             .catch(error => {
                 console.log(error);
-                const resData = error.response.data;
-                if(!resData.success || error){
+                if(!error.response){
                     this.setState({loading: false})
                     swal({
-                        text: "Usuário ou senha invalidos",
+                        text: "Ops, ocorreu um erro inesperado. Por favor, tente mais tarde.",
                         icon: "warning",
                       });
+                } else {
+                    const resData = error.response.data;
+                    if(!resData.success || error){
+                        this.setState({loading: false})
+                        swal({
+                            text: "Usuário ou senha invalidos",
+                            icon: "warning",
+                          });
+                    }
                 }
-                
             });
 
     };
 
-    // handleRegister = (e) => {
-    //     this.props.history.push('user/register');
-    // }
+    handleRegister = (e) => {
+        this.props.history.push('user/register');
+    }
 
     handleUserChange = (e) => {
         this.setState({
@@ -89,14 +96,17 @@ export default class Login extends Component {
                     type="password"
                     required
                 />
-                {this.state.loading && 
-                    <StageSpinner  
-                        size={60}
-                        color="#D14827"
-                        loading={this.state.loading}
-                    />
-                }
-                {!this.state.loading && <button type="submit">Entrar</button>}
+                <div className="secticon-actions">
+                    <span onClick={this.handleRegister} className="create-acount">Criar conta</span>
+                    {this.state.loading && 
+                        <StageSpinner  
+                            size={60}
+                            color="#D14827"
+                            loading={this.state.loading}
+                        />
+                    }
+                    {!this.state.loading && <button type="submit">Entrar</button>}
+                </div>
             </form>
         </div>
     );

@@ -40,11 +40,11 @@
     border-radius: 50px;
     font-size: 16px;
     padding: 0 20px;
-    margin-top: 10px;
     color: #fff;
     font-weight: bold;
     border: none;
     cursor: pointer;
+    flex: auto;
 }
 
 #login-container form button:hover {
@@ -53,7 +53,22 @@
     opacity: 0.93;
 }
 
-.dRgCXB{
-    align-self: center;
+.secticon-actions {
+    display: flex;
+    margin-top: 15px;
 }
 
+.dRgCXB{
+    margin-right: 10px;
+    align-self: flex-end;
+}
+
+.create-acount {
+    margin-right: 30px;
+    margin-left: 10px;
+    font-size: large;
+    color: #e32421;
+    cursor: pointer;
+    align-self: center;
+    padding: 5px;
+}
