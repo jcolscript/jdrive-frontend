@@ -3,6 +3,7 @@ import { isAuthenticated } from "./services/auth";
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import Login from './components/Login';
+import Register from './components/Register';
 import Main from './components/Main';
 import Folder from './components/Folder';
 
@@ -23,6 +24,7 @@ const Routes = () => (
     <BrowserRouter>
         <Switch>
             <Route path="/" exact component={Login} />
+            <Route path="/user/register" component={Register} />
             <PrivateRoute path='/jdrive' exact component={Main} />
             <PrivateRoute path='/jdrive/folder/:id' component={Folder}/>
         </Switch>

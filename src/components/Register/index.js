@@ -3,12 +3,11 @@ import swal from 'sweetalert';
 import { StageSpinner   } from "react-spinners-kit";
 
 import api from '../../services/api';
-import utils from '../../utils';
 
 import logo from '../../assets/logo.svg';
 import './styles.css';
 
-export default class Login extends Component {
+export default class Register extends Component {
     state = {
         email: '',
         password: '',
@@ -17,25 +16,33 @@ export default class Login extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const {email, password} = this.state;
+        const {name, lastName, email, password, birthDate} = this.state;
         this.setState({loading: true})
         let dataToSend = {
+            name: name,
+            lastName: lastName,
             email: email,
-            password: password
-        }    
+            password: password,
+            birthDate: birthDate,
+        }
+
+        console.log(dataToSend);
         
         if(!email.length) return;
         if(!password.length) return;
 
-        await api.post('/users/signin', dataToSend, {
+        await api.post('/users/signup', dataToSend, {
             headers: {
                 'Content-Type': 'application/json',
             }})
             .then(res => {
-                if(res.status === 200){
+                if(res.status === 201){
                     this.setState({loading: false})
-                    utils.storageSetItem('@JDriveToken', res.data.jdrive_token)
-                    this.props.history.push('/jdrive');
+                    swal({
+                        text: "Conta criada com sucesso.",
+                        icon: "success",
+                    });
+                    this.props.history.push('/');
                 }
             })
             .catch(error => {
@@ -51,7 +58,7 @@ export default class Login extends Component {
                     if(!resData.success || error){
                         this.setState({loading: false})
                         swal({
-                            text: "Usuário ou senha invalidos",
+                            text: "Ops, ocorreu um erro inesperado. Por favor, tente mais tarde.",
                             icon: "warning",
                           });
                     }
@@ -60,11 +67,11 @@ export default class Login extends Component {
 
     };
 
-    handleRegister = (e) => {
-        this.props.history.push('user/register');
+    handleLogin = (e) => {
+        this.props.history.push('/');
     }
 
-    handleUserChange = (e) => {
+    handleEmailChange = (e) => {
         this.setState({
             email: e.target.value
         });
@@ -76,6 +83,24 @@ export default class Login extends Component {
         });
     };
 
+    handleLastChange = (e) => {
+        this.setState({
+            lastName: e.target.value
+        });
+    };
+
+    handleNameChange = (e) => {
+        this.setState({
+            name: e.target.value
+        });
+    };
+
+    handleBirthChange = (e) => {
+        this.setState({
+            birthDate: e.target.value
+        });
+    };
+
 
   render() {
     return (
@@ -83,9 +108,30 @@ export default class Login extends Component {
             <form onSubmit={this.handleSubmit}>
                 <img className="logo" width="250px" src={logo} alt="JDrive"/>
                 <input
+                    value={this.state.name}
+                    onChange={this.handleNameChange}
+                    placeholder="Nome"
+                    type="text"
+                    required
+                />
+                <input
+                    value={this.state.lastName}
+                    onChange={this.handleLastChange}
+                    placeholder="Sobrenome"
+                    type="text"
+                    required
+                />
+                <input
+                    value={this.state.birthDate}
+                    onChange={this.handleBirthChange}
+                    placeholder="Nascimento"
+                    type="date"
+                    required
+                />
+                <input
                     value={this.state.email}
-                    onChange={this.handleUserChange}
-                    placeholder="Nome de usuário"
+                    onChange={this.handleEmailChange}
+                    placeholder="Email"
                     type="email"
                     required
                 />
@@ -94,6 +140,7 @@ export default class Login extends Component {
                     onChange={this.handlePassChange}
                     placeholder="Senha"
                     type="password"
+                    minLength="4"
                     required
                 />
                 <div className="secticon-actions">
@@ -104,8 +151,8 @@ export default class Login extends Component {
                             loading={this.state.loading}
                         />
                     }
-                    {!this.state.loading && <span onClick={this.handleRegister} className="create-acount">Criar conta</span> }
-                    {!this.state.loading && <button type="submit">Entrar</button>}
+                    {!this.state.loading && <span onClick={this.handleLogin} className="create-acount">Fazer login</span> }
+                    {!this.state.loading && <button type="submit">Salvar</button>}
                 </div>
             </form>
         </div>
