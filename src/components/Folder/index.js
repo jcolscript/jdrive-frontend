@@ -37,12 +37,13 @@ export default class Folder extends Component {
 
   subscribeToNewFiles = () => {
     const folder = this.props.match.params.id;
-    const io = socket('http://localhost:3000');
+    const io = socket('https://jdrive.azurewebsites.net');
 
     io.emit('connectRomm', folder);
 
     io.on('file', data => {
       this.setState({ folder: {...this.state.folder, files: [data, ...this.state.folder.files, ]}})
+      console.log(data)
     })
   }
 

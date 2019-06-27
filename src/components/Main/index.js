@@ -37,7 +37,7 @@ export default class Main extends Component {
   subscribeToNewFolders = () => {
     const token = utils.storageGetItem('@JDriveToken');
     const userId = utils.jwtDecode(token);
-    const io = socket('http://localhost:3000');
+    const io = socket('https://jdrive.azurewebsites.net');
 
     io.emit('connectRomm', userId.id);
 
