@@ -4,6 +4,7 @@ import  { distanceInWords } from 'date-fns'
 import { StageSpinner   } from "react-spinners-kit";
 import  pt from 'date-fns/locale/pt'
 import Dropzone from 'react-dropzone'
+import socket from 'socket.io-client';
 import Nav from '../Nav';
 import utils from '../../utils';
 import api from '../../services/api';
@@ -20,6 +21,7 @@ export default class Folder extends Component {
 
   async componentDidMount() {
     this.setState({loading: true})
+    this.subscribeToNewFiles();
     const token = utils.storageGetItem('@JDriveToken');
     const folder = this.props.match.params.id;
     const response = await api.get(`folders/${folder}`,
@@ -31,6 +33,17 @@ export default class Folder extends Component {
 
     this.setState({loading: false})
     this.setState({folder: response.data});
+  }
+
+  subscribeToNewFiles = () => {
+    const folder = this.props.match.params.id;
+    const io = socket('http://localhost:3000');
+
+    io.emit('connectRomm', folder);
+
+    io.on('file', data => {
+      this.setState({ folder: {...this.state.folder, files: [data, ...this.state.folder.files, ]}})
+    })
   }
 
   handleUpload = (files) => {

@@ -5,6 +5,7 @@ import { MdFolder } from 'react-icons/md'
 import  { distanceInWords } from 'date-fns'
 import  pt from 'date-fns/locale/pt'
 import { StageSpinner   } from "react-spinners-kit";
+import socket from 'socket.io-client';
 
 import utils from '../../utils';
 import api from '../../services/api';
@@ -21,6 +22,7 @@ export default class Main extends Component {
 
   async componentDidMount() {
     this.setState({loading: true})
+    this.subscribeToNewFolders();
     const token = utils.storageGetItem('@JDriveToken');
     const response = await api.get(`folders`,
     { 
@@ -30,6 +32,19 @@ export default class Main extends Component {
     });
     this.setState({loading: false})
     this.setState({folders: response.data});
+  }
+
+  subscribeToNewFolders = () => {
+    const token = utils.storageGetItem('@JDriveToken');
+    const userId = utils.jwtDecode(token);
+    const io = socket('http://localhost:3000');
+
+    io.emit('connectRomm', userId.id);
+
+    io.on('folder', data => {
+      this.setState({ folders: [data, ...this.state.folders]})
+      console.log(data);
+    })
   }
 
   handleSubmit = async (e) => {
